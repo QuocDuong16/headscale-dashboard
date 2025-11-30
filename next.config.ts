@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   allowedDevOrigins: ["niand-nuc", "localhost"],
   output: "standalone",
+  productionBrowserSourceMaps: false,
+  compress: true,
   experimental: {
     optimizeCss: false,
   },
