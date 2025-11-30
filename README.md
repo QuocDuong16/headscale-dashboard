@@ -48,12 +48,11 @@ docker run -d \
   -e HEADSCALE_API_URL=https://your-headscale-server.com \
   --name headscale-dashboard \
   --restart unless-stopped \
-  your-dockerhub-username/headscale-dashboard:latest
+  ghcr.io/QuocDuong16/headscale-dashboard:latest
 ```
 
 Replace:
 - `https://your-headscale-server.com` with your actual Headscale API URL
-- `your-dockerhub-username/headscale-dashboard:latest` with the actual Docker image name
 
 #### Using Docker Compose
 
@@ -64,7 +63,7 @@ version: '3.8'
 
 services:
   headscale-dashboard:
-    image: your-dockerhub-username/headscale-dashboard:latest
+    image: ghcr.io/QuocDuong16/headscale-dashboard:latest
     container_name: headscale-dashboard
     ports:
       - "3000:3000"
@@ -88,7 +87,7 @@ docker-compose up -d
 
    **Basic Configuration:**
    - Application Name: `headscale-dashboard`
-   - Image Repository: `your-dockerhub-username/headscale-dashboard` (or `ghcr.io/yourusername/headscale-dashboard`)
+   - Image Repository: `ghcr.io/QuocDuong16/headscale-dashboard`
    - Image Tag: `latest`
    - Container Port: `3000`
    - Protocol: `TCP`
@@ -187,7 +186,7 @@ For detailed TrueNAS deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)
 ### Docker
 
 ```bash
-docker pull your-dockerhub-username/headscale-dashboard:latest
+docker pull ghcr.io/QuocDuong16/headscale-dashboard:latest
 docker stop headscale-dashboard
 docker rm headscale-dashboard
 docker run -d \
@@ -195,7 +194,7 @@ docker run -d \
   -e HEADSCALE_API_URL=https://your-headscale-server.com \
   --name headscale-dashboard \
   --restart unless-stopped \
-  your-dockerhub-username/headscale-dashboard:latest
+  ghcr.io/QuocDuong16/headscale-dashboard:latest
 ```
 
 ### TrueNAS Scale
