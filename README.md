@@ -4,7 +4,7 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
 ![Docker](https://img.shields.io/badge/Docker-Available-2496ED?style=flat-square&logo=docker&logoColor=white)
-![GitHub release](https://img.shields.io/github/v/release/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&include_prereleases&sort=semver&label=version)
+![GitHub release](https://img.shields.io/github/v/tag/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=version&sort=semver)
 ![GitHub Stars](https://img.shields.io/github/stars/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=stars)
 ![GitHub Issues](https://img.shields.io/github/issues/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=issues)
 ![GitHub Forks](https://img.shields.io/github/forks/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=forks)
@@ -96,6 +96,8 @@ docker run -d -p 3000:3000 -e HEADSCALE_API_URL=https://your-headscale-server.co
 
 > 💡 **Tip:** To use a different port, add `-e PORT=8080` and change the port mapping to `-p 8080:8080`
 
+> ⚠️ **Production Recommendation:** For production environments, consider using version tags (e.g., `v0.1.0`) instead of `latest` for better stability and control. Check [GitHub Releases](https://github.com/QuocDuong16/headscale-dashboard/releases) for available versions.
+
 #### Using Docker Compose
 
 1. Create a `docker-compose.yml` file:
@@ -119,6 +121,8 @@ services:
 
 **Note:** If you change the `PORT` environment variable, make sure to update the port mapping (e.g., `"8080:8080"` if `PORT=8080`).
 
+> ⚠️ **Production Tip:** Replace `latest` with a specific version tag (e.g., `v0.1.0`) in the `image` field for production deployments. This ensures you're using a known stable version.
+
 2. Run:
 
 ```bash
@@ -134,9 +138,11 @@ docker-compose up -d
    **Basic Configuration:**
    - Application Name: `headscale-dashboard`
    - Image Repository: `ghcr.io/quocduong16/headscale-dashboard`
-   - Image Tag: `latest`
+   - Image Tag: `latest` (or use a specific version like `v0.1.0` for production)
    - Container Port: `3000`
    - Protocol: `TCP`
+
+   > ⚠️ **Production Recommendation:** Use a specific version tag (e.g., `v0.1.0`) instead of `latest` for better stability. Check [GitHub Releases](https://github.com/QuocDuong16/headscale-dashboard/releases) for the latest version.
 
    **Environment Variables:**
    - `HEADSCALE_API_URL`: Your Headscale API URL (e.g., `https://vpn.example.com`)
@@ -238,6 +244,8 @@ docker-compose up -d
 
 ### Docker
 
+**Using `latest` tag:**
+
 ```bash
 docker pull ghcr.io/quocduong16/headscale-dashboard:latest
 docker stop headscale-dashboard
@@ -250,12 +258,35 @@ docker run -d \
   ghcr.io/quocduong16/headscale-dashboard:latest
 ```
 
+**Using version tag (recommended for production):**
+
+```bash
+# Replace v0.1.0 with the latest version from GitHub Releases
+docker pull ghcr.io/quocduong16/headscale-dashboard:v0.1.0
+docker stop headscale-dashboard
+docker rm headscale-dashboard
+docker run -d \
+  -p 3000:3000 \
+  -e HEADSCALE_API_URL=https://your-headscale-server.com \
+  --name headscale-dashboard \
+  --restart unless-stopped \
+  ghcr.io/quocduong16/headscale-dashboard:v0.1.0
+```
+
+> 💡 **Tip**: Check [GitHub Releases](https://github.com/QuocDuong16/headscale-dashboard/releases) for the latest version tag. Using version tags provides better stability and control over updates.
+
 ### TrueNAS Scale
 
-1. Go to the app in TrueNAS
-2. Click **Upgrade**
-3. Select the new image tag
-4. Click **Upgrade**
+1. Go to **Apps** and find **headscale-dashboard**
+2. Click on the app (or the three dots menu) and select **Edit** (or Upgrade)
+3. Scroll down to **Image Configuration**
+4. Change the **Image Tag** field:
+   - **If using `latest`**: Change 'Image Pull Policy' to 'Always' to force update
+   - **If using versions**: Change from `v0.1.0` to `v0.1.1` (check [GitHub Releases](https://github.com/QuocDuong16/headscale-dashboard/releases) for the latest version)
+5. Scroll down and click **Save** / **Update**
+6. Wait for the container to restart with the new image
+
+> 💡 **Tip**: Using version tags (e.g., `v0.1.0`) instead of `latest` is recommended for production as it provides better control and stability.
 
 ## 🤝 Contributing
 
