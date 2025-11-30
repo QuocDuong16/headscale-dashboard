@@ -1,8 +1,37 @@
+<div align="center">
+
 # Headscale Dashboard
+
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
+![Docker](https://img.shields.io/badge/Docker-Available-2496ED?style=flat-square&logo=docker&logoColor=white)
+![GitHub release](https://img.shields.io/github/v/release/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&include_prereleases&sort=semver&label=version)
+![GitHub Stars](https://img.shields.io/github/stars/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=stars)
+![GitHub Issues](https://img.shields.io/github/issues/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=issues)
+![GitHub Forks](https://img.shields.io/github/forks/QuocDuong16/headscale-dashboard?style=flat-square&logo=github&label=forks)
 
 A modern, beautiful web dashboard for managing your Headscale VPN server.
 
-## Features
+**Built with** ![Next.js](https://img.shields.io/badge/Next.js-16.0-black?logo=next.js) ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1-38BDF8?logo=tailwind-css) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript) ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react) ![ShadcnUI](https://img.shields.io/badge/ShadcnUI-000000?style=flat-square&logo=shadcnui&logoColor=white)
+
+[🚀 Quick Start](#quick-start) • [📖 Documentation](#installation) • [🐛 Report Bug](https://github.com/QuocDuong16/headscale-dashboard/issues) • [💡 Request Feature](https://github.com/QuocDuong16/headscale-dashboard/issues)
+
+![Dashboard Screenshot](docs/images/dashboard-screenshot.png)
+
+</div>
+
+## 📑 Table of Contents
+
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [📦 Installation](#-installation)
+- [⚙️ Configuration](#️-configuration)
+- [🔧 Usage](#-usage)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [🔄 Updating](#-updating)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+## ✨ Features
 
 - 🖥️ **Machine Management**: View, rename, move, expire, and delete machines
 - 👥 **User Management**: Create, rename, and delete users
@@ -28,19 +57,9 @@ This project is currently in active development. While the core functionality ha
 
 We are committed to making this dashboard more stable and feature-complete in the future. Your contributions and bug reports are essential for this project's success!
 
-## Requirements
+## 🚀 Quick Start
 
-- Docker (for Docker deployment)
-- A running Headscale server with API access
-- Headscale API token (get it from your Headscale server)
-
-## Installation
-
-### Docker (Recommended)
-
-The easiest way to run Headscale Dashboard is using Docker.
-
-#### Quick Start
+Get up and running in seconds:
 
 ```bash
 docker run -d \
@@ -51,10 +70,31 @@ docker run -d \
   ghcr.io/quocduong16/headscale-dashboard:latest
 ```
 
-Replace:
-- `https://your-headscale-server.com` with your actual Headscale API URL
+Then open `http://localhost:3000` in your browser! 🎉
 
-**Note:** To use a different port, add `-e PORT=8080` and change the port mapping to `-p 8080:8080` (replace `8080` with your desired port).
+---
+
+## 📦 Installation
+
+### Requirements
+
+- Docker (for Docker deployment)
+- A running Headscale server with API access
+- Headscale API token (get it from your Headscale server)
+
+### Docker (Recommended)
+
+The easiest way to run Headscale Dashboard is using Docker.
+
+#### One-Line Install
+
+```bash
+docker run -d -p 3000:3000 -e HEADSCALE_API_URL=https://your-headscale-server.com --name headscale-dashboard --restart unless-stopped ghcr.io/quocduong16/headscale-dashboard:latest
+```
+
+**Replace:** `https://your-headscale-server.com` with your actual Headscale API URL
+
+> 💡 **Tip:** To use a different port, add `-e PORT=8080` and change the port mapping to `-p 8080:8080`
 
 #### Using Docker Compose
 
@@ -118,7 +158,7 @@ docker-compose up -d
 
 4. Click **Save** and wait for deployment
 
-## Usage
+## 🔧 Usage
 
 1. **Access the Dashboard**: Open `http://your-server-ip:3000` in your browser
 
@@ -142,7 +182,7 @@ docker-compose up -d
    - Click on machines to view detailed information
    - Use modals to create or edit resources
 
-## Configuration
+## ⚙️ Configuration
 
 ### Environment Variables
 
@@ -169,7 +209,7 @@ docker-compose up -d
 3. Copy the generated API key
 4. Use this key in the dashboard's token input field
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Container won't start
 - Check logs: `docker logs headscale-dashboard`
@@ -194,7 +234,7 @@ docker-compose up -d
 - Check container logs for errors
 - Ensure port forwarding is configured correctly
 
-## Updating
+## 🔄 Updating
 
 ### Docker
 
@@ -217,14 +257,55 @@ docker run -d \
 3. Select the new image tag
 4. Click **Upgrade**
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please feel free to:
-- 🐛 Report bugs by opening an issue
-- 💡 Suggest new features or improvements
-- 🔧 Submit pull requests for bug fixes or enhancements
-- 📝 Improve documentation
+Contributions are welcome and greatly appreciated! 
 
-## License
+### How to Contribute
 
-This project is open source and available under the MIT License.
+1. 🍴 Fork the repository
+2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. 💾 Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+5. 🔀 Open a Pull Request
+
+### What You Can Do
+
+- 🐛 **Report bugs** by opening an issue
+- 💡 **Suggest new features** or improvements
+- 🔧 **Submit pull requests** for bug fixes or enhancements
+- 📝 **Improve documentation** (typos, clarifications, examples)
+- 🎨 **Enhance UI/UX** (design improvements, accessibility)
+- 🌍 **Add translations** (i18n support)
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/QuocDuong16/headscale-dashboard.git
+cd headscale-dashboard
+
+# Install dependencies
+pnpm install
+
+# Run development server
+pnpm dev
+```
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [QuocDuong16](https://github.com/QuocDuong16)**
+
+⭐ Star this repo if you find it helpful!
+
+[⬆ Back to Top](#headscale-dashboard)
+
+</div>
