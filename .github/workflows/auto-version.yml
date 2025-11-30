@@ -1,0 +1,67 @@
+name: Auto Version and Release
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'package.json'
+
+jobs:
+  auto-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    # Chỉ chạy khi không phải là tag push
+    if: "!startsWith(github.ref, 'refs/tags/')"
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if package.json version changed
+        id: check_version
+        run: |
+          # Lấy version từ package.json hiện tại
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "Current package.json version: $CURRENT_VERSION"
+          
+          # Lấy tag mới nhất
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          
+          if [ -z "$LATEST_TAG" ]; then
+            # Chưa có tag nào, tạo tag đầu tiên từ package.json
+            NEW_VERSION="v${CURRENT_VERSION}"
+            echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+            echo "No existing tags, creating first tag: $NEW_VERSION"
+          else
+            # Bỏ chữ 'v' ở đầu tag
+            TAG_VERSION=${LATEST_TAG#v}
+            
+            if [ "$CURRENT_VERSION" != "$TAG_VERSION" ]; then
+              # Version trong package.json khác với tag mới nhất
+              NEW_VERSION="v${CURRENT_VERSION}"
+              echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+              echo "version_changed=true" >> $GITHUB_OUTPUT
+              echo "Version changed from $TAG_VERSION to $CURRENT_VERSION"
+            else
+              echo "version_changed=false" >> $GITHUB_OUTPUT
+              echo "Version unchanged, skipping tag creation"
+            fi
+          fi
+
+      - name: Create and push tag
+        if: steps.check_version.outputs.version_changed == 'true'
+        run: |
+          NEW_VERSION="${{ steps.check_version.outputs.new_version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$NEW_VERSION" -m "Auto release $NEW_VERSION [skip ci]"
+          git push origin "$NEW_VERSION"
+          echo "Created and pushed tag: $NEW_VERSION"
+
