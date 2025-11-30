@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  headscale-dashboard:
+    image: ghcr.io/quocduong16/headscale-dashboard:latest
+    container_name: headscale-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - HEADSCALE_API_URL=${HEADSCALE_API_URL:-https://vpn.niand.id.vn}
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
