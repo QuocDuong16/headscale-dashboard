@@ -26,9 +26,9 @@ export function CreateKeyModal({ open, onClose }: CreateKeyModalProps) {
 
   const handleCreate = () => {
     createKey.mutate(
-      {
-        expiration: expiration || undefined,
-      },
+      expiration.trim()
+        ? { expiration: expiration.trim() }
+        : {},
       {
         onSuccess: (data) => {
           setCreatedKey(data.apiKey);

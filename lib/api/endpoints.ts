@@ -288,7 +288,13 @@ export const apiKeysApi = {
   },
 
   create: async (data?: CreateApiKeyRequest): Promise<CreateApiKeyResponse> => {
-    const response = await apiClient.post<CreateApiKeyResponse>("/apikey", data || {});
+    // Remove undefined fields before sending
+    const requestData = data
+      ? Object.fromEntries(
+          Object.entries(data).filter(([, value]) => value !== undefined)
+        )
+      : {};
+    const response = await apiClient.post<CreateApiKeyResponse>("/apikey", requestData);
     return response.data;
   },
 
