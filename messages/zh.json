@@ -340,7 +340,7 @@
       "usingKeysStep2": "复制密钥值",
       "usingKeysStep3": "按照<setup>设置</setup>中的设置说明操作",
       "usingKeysStep4": "使用--authkey参数使用密钥",
-      "usingKeysExample": "示例：tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_KEY",
+      "usingKeysExample": "示例：tailscale up --login-server=YOUR_HEADSCALE_SERVER_URL --authkey=YOUR_KEY",
       "keyExpiration": "密钥过期和管理",
       "expirationDesc": "密钥可以有过期日期。过期后，密钥不能再用于连接新机器。",
       "ephemeralKeys": "临时密钥",

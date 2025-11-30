@@ -334,7 +334,7 @@
       "usingKeysStep2": "キー値をコピー",
       "usingKeysStep3": "<setup>セットアップ</setup>の手順に従う",
       "usingKeysStep4": "--authkeyパラメータでキーを使用",
-      "usingKeysExample": "例：tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_KEY",
+      "usingKeysExample": "例：tailscale up --login-server=YOUR_HEADSCALE_SERVER_URL --authkey=YOUR_KEY",
       "createKeyModal": "PreAuthキーを作成",
       "expirationOptional": "有効期限（オプション）",
       "selectExpirationDate": "有効期限を選択",

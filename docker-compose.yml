@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - HEADSCALE_API_URL=${HEADSCALE_API_URL:-https://vpn.niand.id.vn}
+      - HEADSCALE_API_URL=${HEADSCALE_API_URL:-https://your-headscale-server.com}
       - NODE_ENV=production
     restart: unless-stopped
     healthcheck:

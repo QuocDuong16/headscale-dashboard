@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,6 +27,23 @@ export function SetupGuide() {
   const t = useTranslations("pages.setup");
   const locale = useLocale();
   const [selectedPlatform, setSelectedPlatform] = useState<"linux" | "windows" | "macos">("linux");
+  const [headscaleServerUrl, setHeadscaleServerUrl] = useState<string | null>(null);
+  
+  // Fetch server URL from API (uses getHeadscaleApiUrl logic)
+  // Chỉ dùng 1 biến HEADSCALE_API_URL cho cả server và client
+  useEffect(() => {
+    fetch("/api/config")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.serverUrl) {
+          setHeadscaleServerUrl(data.serverUrl);
+        }
+      })
+      .catch(() => {
+        // If API fails, keep null - will show placeholder in command
+        // This ensures we never hardcode a URL
+      });
+  }, []);
 
   const platforms = {
     linux: {
@@ -59,7 +76,7 @@ export function SetupGuide() {
           description: t("linux.connectDesc"),
           commands: [
             "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
-            "sudo tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_PREAUTH_KEY",
+            `sudo tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"} --authkey=YOUR_PREAUTH_KEY`,
           ],
           note: t("preAuthKeyAlert"),
         },
@@ -99,7 +116,7 @@ export function SetupGuide() {
           commands: [
             "# Open PowerShell as Administrator",
             "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
-            "tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_PREAUTH_KEY",
+            `tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"} --authkey=YOUR_PREAUTH_KEY`,
           ],
           note: t("preAuthKeyAlert"),
         },
@@ -141,7 +158,7 @@ export function SetupGuide() {
           commands: [
             "# Open Terminal",
             "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
-            "sudo tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_PREAUTH_KEY",
+            `sudo tailscale up --login-server=${headscaleServerUrl} --authkey=YOUR_PREAUTH_KEY`,
           ],
           note: t("preAuthKeyAlert"),
         },

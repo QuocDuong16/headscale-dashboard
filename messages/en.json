@@ -340,7 +340,7 @@
       "usingKeysStep2": "Copy the key value",
       "usingKeysStep3": "Follow the setup instructions at Setup",
       "usingKeysStep4": "Use the key with the --authkey parameter",
-      "usingKeysExample": "Example: tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_KEY",
+      "usingKeysExample": "Example: tailscale up --login-server=YOUR_HEADSCALE_SERVER_URL --authkey=YOUR_KEY",
       "keyExpiration": "Key Expiration and Management",
       "expirationDesc": "Keys can have an expiration date. After expiration, the key can no longer be used to connect new machines.",
       "ephemeralKeys": "Ephemeral Keys",

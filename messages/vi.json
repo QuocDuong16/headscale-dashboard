@@ -334,7 +334,7 @@
       "usingKeysStep2": "Sao chép giá trị khóa",
       "usingKeysStep3": "Làm theo hướng dẫn thiết lập tại <setup>Thiết lập</setup>",
       "usingKeysStep4": "Sử dụng khóa với tham số --authkey",
-      "usingKeysExample": "Ví dụ: tailscale up --login-server=https://vpn.niand.id.vn --authkey=YOUR_KEY",
+      "usingKeysExample": "Ví dụ: tailscale up --login-server=YOUR_HEADSCALE_SERVER_URL --authkey=YOUR_KEY",
       "createKeyModal": "Tạo khóa PreAuth",
       "expirationOptional": "Hết hạn (tùy chọn)",
       "selectExpirationDate": "Chọn ngày hết hạn",

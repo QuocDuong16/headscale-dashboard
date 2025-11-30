@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin("./i18n/config.ts");
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["niand-nuc", "localhost"],
+  allowedDevOrigins: ["localhost"],
   output: "standalone",
   productionBrowserSourceMaps: false,
   compress: true,
