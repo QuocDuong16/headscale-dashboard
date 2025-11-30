@@ -38,20 +38,52 @@ export function CreateKeyModal({
   const [expiration, setExpiration] = useState("");
   const [tags, setTags] = useState("");
 
+  const setExpirationFromDays = (days: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    date.setHours(23, 59, 0, 0); // Set to end of day
+    // Format as YYYY-MM-DDTHH:mm for DatePicker (DatePicker expects this format)
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    setExpiration(`${year}-${month}-${day}T${hours}:${minutes}`);
+  };
+
   const handleCreate = () => {
     if (!user.trim()) return;
+    if (!expiration.trim()) return;
 
     const aclTags = tags
       .split(",")
       .map((t) => t.trim())
       .filter((t) => t.length > 0);
 
+    // Convert expiration to RFC3339 format (required by protobuf Timestamp)
+    // DatePicker returns YYYY-MM-DDTHH:mm, we need YYYY-MM-DDTHH:mm:00Z
+    const dateStr = expiration.trim();
+    let formattedExpiration: string;
+    
+    // Validate format: YYYY-MM-DDTHH:mm
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(dateStr)) {
+      // Append seconds and UTC timezone: YYYY-MM-DDTHH:mm:ssZ
+      formattedExpiration = `${dateStr}:00Z`;
+    } else {
+      // Fallback: try parsing as Date and convert to ISO
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        return; // Invalid date
+      }
+      formattedExpiration = date.toISOString();
+    }
+
     createKey.mutate(
       {
         user: user.trim(),
         reusable,
         ephemeral,
-        expiration: expiration || undefined,
+        expiration: formattedExpiration,
         aclTags: aclTags.length > 0 ? aclTags : undefined,
       },
       {
@@ -114,8 +146,34 @@ export function CreateKeyModal({
 
         <div className="space-y-2">
           <Label>
-            {t("expirationOptional")}
+            {t("expiration")} <span className="text-destructive">*</span>
           </Label>
+          <div className="flex flex-wrap gap-2 mb-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setExpirationFromDays(30)}
+            >
+              {t("expireIn30Days")}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setExpirationFromDays(180)}
+            >
+              {t("expireIn180Days")}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setExpirationFromDays(9999)}
+            >
+              {t("expireIn9999Days")}
+            </Button>
+          </div>
           <DatePicker
             value={expiration}
             onChange={setExpiration}
@@ -139,7 +197,7 @@ export function CreateKeyModal({
           <Button variant="outline" onClick={onClose}>
             {tCommon("cancel")}
           </Button>
-          <Button onClick={handleCreate} disabled={createKey.isPending}>
+          <Button onClick={handleCreate} disabled={createKey.isPending || !expiration.trim()}>
             {createKey.isPending ? t("creating") : tCommon("create")}
           </Button>
         </div>

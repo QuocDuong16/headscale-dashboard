@@ -25,10 +25,31 @@ export function CreateKeyModal({ open, onClose }: CreateKeyModalProps) {
   const createKey = useCreateApiKey();
 
   const handleCreate = () => {
+    if (!expiration.trim()) {
+      return; // Don't create if expiration is empty
+    }
+    
+    // Convert from DatePicker format (YYYY-MM-DDTHH:mm) to RFC3339 full format (YYYY-MM-DDTHH:mm:ssZ)
+    // DatePicker returns format like "2026-12-30T17:00" but API needs "2026-12-30T17:00:00Z"
+    // Parse the string and append seconds and UTC timezone
+    const dateStr = expiration.trim();
+    let expirationDate: string;
+    
+    // Validate format: YYYY-MM-DDTHH:mm
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(dateStr)) {
+      // Append seconds and UTC timezone: YYYY-MM-DDTHH:mm:ssZ
+      expirationDate = `${dateStr}:00Z`;
+    } else {
+      // Fallback: try parsing as Date and convert to ISO
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        return; // Invalid date
+      }
+      expirationDate = date.toISOString();
+    }
+    
     createKey.mutate(
-      expiration.trim()
-        ? { expiration: expiration.trim() }
-        : {},
+      { expiration: expirationDate },
       {
         onSuccess: (data) => {
           setCreatedKey(data.apiKey);
@@ -51,6 +72,19 @@ export function CreateKeyModal({ open, onClose }: CreateKeyModalProps) {
     setExpiration("");
     setCopied(false);
     onClose();
+  };
+
+  const setExpirationFromDays = (days: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    date.setHours(23, 59, 0, 0); // Set to end of day
+    // Format as YYYY-MM-DDTHH:mm for DatePicker
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    setExpiration(`${year}-${month}-${day}T${hours}:${minutes}`);
   };
 
   return (
@@ -94,23 +128,49 @@ export function CreateKeyModal({ open, onClose }: CreateKeyModalProps) {
           <>
             <div className="space-y-2">
               <Label>
-                {tApiKey("expirationDateOptional")}
+                {tApiKey("expirationDate")} <span className="text-destructive">*</span>
               </Label>
+              <div className="flex flex-wrap gap-2 mb-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setExpirationFromDays(30)}
+                >
+                  {tApiKey("expireIn30Days")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setExpirationFromDays(180)}
+                >
+                  {tApiKey("expireIn180Days")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setExpirationFromDays(9999)}
+                >
+                  {tApiKey("expireIn9999Days")}
+                </Button>
+              </div>
               <DatePicker
                 value={expiration}
                 onChange={setExpiration}
                 placeholder={tApiKey("selectExpirationDate")}
                 showTime={true}
               />
-              <p className="text-xs text-muted-foreground">
-                {tApiKey("leaveEmptyNoExpiration")}
-              </p>
             </div>
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={handleClose}>
                 {tCommon("cancel")}
               </Button>
-              <Button onClick={handleCreate} disabled={createKey.isPending}>
+              <Button 
+                onClick={handleCreate} 
+                disabled={createKey.isPending || !expiration.trim()}
+              >
                 {createKey.isPending ? tApiKey("creating") : tApiKey("createKeyButton")}
               </Button>
             </div>

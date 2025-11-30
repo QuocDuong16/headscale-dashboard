@@ -23,6 +23,14 @@ import { CreateKeyModal } from "./create-key-modal";
 import { formatDate } from "@/lib/utils/format";
 import type { ApiKey } from "@/lib/api/types";
 
+// Helper function to check if a date string is valid
+function isValidDate(dateString: string | null | undefined): boolean {
+  if (!dateString) return false;
+  const date = new Date(dateString);
+  // Check if date is valid and not a default/invalid date (like year 1)
+  return !isNaN(date.getTime()) && date.getFullYear() > 1900;
+}
+
 export function ApiKeyList() {
   const t = useTranslations("components.confirm");
   const tCommon = useTranslations("common");
@@ -173,7 +181,7 @@ export function ApiKeyList() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      {key.expiration ? (
+                      {key.expiration && isValidDate(key.expiration) ? (
                         <Badge variant="default">
                           {formatDate(key.expiration)}
                         </Badge>

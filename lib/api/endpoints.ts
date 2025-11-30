@@ -1,4 +1,4 @@
-import { apiClient, ApiError } from "./client";
+import { apiClient } from "./client";
 import type {
   Machine,
   User,
@@ -253,20 +253,10 @@ export const preAuthKeysApi = {
 // ACLs endpoints (using /policy in Headscale API)
 export const aclsApi = {
   get: async (): Promise<ACL> => {
-    try {
-      const response = await apiClient.get<{ policy: string }>("/policy");
-      // Parse policy JSON string to ACL object
-      const policy = JSON.parse(response.data.policy || "{}");
-      return policy as ACL;
-    } catch (error) {
-      // Handle 500 error when policy file is not configured
-      // Error message: "reading policy from path "": open : no such file or directory"
-      if (error instanceof ApiError && error.status === 500) {
-        // Policy file not configured, return empty ACL
-        return {} as ACL;
-      }
-      throw error;
-    }
+    const response = await apiClient.get<{ policy: string }>("/policy");
+    // Parse policy JSON string to ACL object
+    const policy = JSON.parse(response.data.policy || "{}");
+    return policy as ACL;
   },
 
   update: async (acl: ACL): Promise<ACL> => {

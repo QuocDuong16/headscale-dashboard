@@ -56,9 +56,9 @@ export interface PreAuthKey {
 
 export interface CreatePreAuthKeyRequest {
   user: string;
-  reusable?: boolean;
-  ephemeral?: boolean;
-  expiration?: string;
+  reusable: boolean;
+  ephemeral: boolean;
+  expiration: string;
   aclTags?: string[];
 }
 

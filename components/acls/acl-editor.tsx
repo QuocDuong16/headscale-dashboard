@@ -26,6 +26,12 @@ export function ACLEditor() {
   const [previousAcl, setPreviousAcl] = useState<ACL | undefined>(acl);
   const [mounted, setMounted] = useState(false);
   
+  // Check if error indicates file mode (policy file path error)
+  const isFileModeError = error && (
+    error.message.includes("reading policy from path") ||
+    error.message.includes("no such file or directory")
+  );
+  
   // Track mount state to avoid hydration mismatch
   // Using useLayoutEffect with startTransition to avoid cascading renders
   useLayoutEffect(() => {
@@ -99,6 +105,28 @@ export function ACLEditor() {
 
   // Show error state only after mount to avoid hydration mismatch
   if (mounted && error) {
+    // If error indicates file mode, show specific message
+    if (isFileModeError) {
+      return (
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("title")}</CardTitle>
+            <CardDescription>
+              {t("description")}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                {t("fileModeNotSupported")}
+              </AlertDescription>
+            </Alert>
+          </CardContent>
+        </Card>
+      );
+    }
+    
     return (
       <Alert variant="destructive">
         <AlertDescription>

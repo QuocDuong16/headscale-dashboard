@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,6 +45,21 @@ export function SetupGuide() {
       });
   }, []);
 
+  // Create rich text note with link - using inline rendering to prevent line breaks
+  const preAuthKeyNote = useMemo(() => {
+    return (
+      <span className="inline">
+        {t.rich("preAuthKeyAlert", {
+          preauthKeys: (chunks) => (
+            <Link key="preauth" href={`/${locale}/preauth-keys`} className="text-primary hover:underline font-medium whitespace-nowrap">
+              {chunks}
+            </Link>
+          )
+        })}
+      </span>
+    );
+  }, [t, locale]);
+
   const platforms = {
     linux: {
       name: "Linux",
@@ -78,7 +93,7 @@ export function SetupGuide() {
             "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
             `sudo tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"} --authkey=YOUR_PREAUTH_KEY`,
           ],
-          note: t("preAuthKeyAlert"),
+          note: preAuthKeyNote,
         },
         {
           title: t("verifyConnection"),
@@ -118,7 +133,7 @@ export function SetupGuide() {
             "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
             `tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"} --authkey=YOUR_PREAUTH_KEY`,
           ],
-          note: t("preAuthKeyAlert"),
+          note: preAuthKeyNote,
         },
         {
           title: t("verifyConnection"),
@@ -160,7 +175,7 @@ export function SetupGuide() {
             "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
             `sudo tailscale up --login-server=${headscaleServerUrl} --authkey=YOUR_PREAUTH_KEY`,
           ],
-          note: t("preAuthKeyAlert"),
+          note: preAuthKeyNote,
         },
         {
           title: t("verifyConnection"),
@@ -220,7 +235,7 @@ export function SetupGuide() {
                   {step.note && (
                     <Alert>
                       <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>
+                      <AlertDescription className="break-words leading-relaxed [&_a]:whitespace-nowrap">
                         {step.note}
                       </AlertDescription>
                     </Alert>
