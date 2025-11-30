@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -13,6 +14,7 @@ interface ModalProps {
   open: boolean;
   onClose: () => void;
   title?: string;
+  description?: string;
   children: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
 }
@@ -21,6 +23,7 @@ export function Modal({
   open,
   onClose,
   title,
+  description,
   children,
   size = "md",
 }: ModalProps) {
@@ -34,10 +37,16 @@ export function Modal({
           "max-w-2xl": size === "xl",
         })}
       >
-        {title && (
+        {(title || description) && (
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            {title && <DialogTitle>{title}</DialogTitle>}
+            <DialogDescription className={description ? "" : "sr-only"}>
+              {description || (title || "Dialog")}
+            </DialogDescription>
           </DialogHeader>
+        )}
+        {!title && !description && (
+          <DialogDescription className="sr-only">Dialog</DialogDescription>
         )}
         {children}
       </DialogContent>

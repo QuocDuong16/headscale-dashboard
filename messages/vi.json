@@ -392,6 +392,7 @@
       "selectExpirationDate": "Chọn ngày hết hạn",
       "leaveEmptyNoExpiration": "Để trống nếu không có hết hạn",
       "createKeyButton": "Tạo khóa",
+      "creating": "Đang tạo...",
       "done": "Hoàn thành"
     },
     "acls": {
