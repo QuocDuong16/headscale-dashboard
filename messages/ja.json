@@ -392,6 +392,7 @@
       "selectExpirationDate": "有効期限を選択",
       "leaveEmptyNoExpiration": "有効期限なしの場合は空のままにしてください",
       "createKeyButton": "キーを作成",
+      "creating": "作成中...",
       "done": "完了"
     },
     "acls": {

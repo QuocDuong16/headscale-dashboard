@@ -392,6 +392,7 @@
       "selectExpirationDate": "选择过期日期",
       "leaveEmptyNoExpiration": "留空表示不过期",
       "createKeyButton": "创建密钥",
+      "creating": "创建中...",
       "done": "完成"
     },
     "acls": {

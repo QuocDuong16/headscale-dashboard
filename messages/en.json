@@ -390,6 +390,7 @@
       "selectExpirationDate": "Select expiration date",
       "leaveEmptyNoExpiration": "Leave empty for no expiration",
       "createKeyButton": "Create Key",
+      "creating": "Creating...",
       "done": "Done",
       "apiKey": "API Key",
       "createKeyModal": "Create API Key"
