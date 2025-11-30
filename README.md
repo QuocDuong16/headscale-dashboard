@@ -54,6 +54,8 @@ docker run -d \
 Replace:
 - `https://your-headscale-server.com` with your actual Headscale API URL
 
+**Note:** To use a different port, add `-e PORT=8080` and change the port mapping to `-p 8080:8080` (replace `8080` with your desired port).
+
 #### Using Docker Compose
 
 1. Create a `docker-compose.yml` file:
@@ -70,8 +72,12 @@ services:
     environment:
       - HEADSCALE_API_URL=https://your-headscale-server.com
       - NODE_ENV=production
+      # Optional: Override default port (default is 3000)
+      # - PORT=8080
     restart: unless-stopped
 ```
+
+**Note:** If you change the `PORT` environment variable, make sure to update the port mapping (e.g., `"8080:8080"` if `PORT=8080`).
 
 2. Run:
 
@@ -95,10 +101,12 @@ docker-compose up -d
    **Environment Variables:**
    - `HEADSCALE_API_URL`: Your Headscale API URL (e.g., `https://vpn.example.com`)
    - `NODE_ENV`: `production`
+   - `PORT`: (Optional) Server port inside container (default: `3000`)
+     - If you set a custom PORT, make sure to update Container Port and Node Port below
 
    **Networking:**
    - Port Forwarding:
-     - Container Port: `3000`
+     - Container Port: `3000` (or match your `PORT` environment variable)
      - Node Port: `3000` (or any available port)
      - Protocol: `TCP`
 
@@ -142,8 +150,14 @@ docker-compose up -d
 |----------|-------------|----------|---------|
 | `HEADSCALE_API_URL` | Headscale API server URL | Yes | - |
 | `NODE_ENV` | Node environment | No | `production` |
-| `PORT` | Server port | No | `3000` |
-| `HOSTNAME` | Server hostname | No | `0.0.0.0` |
+| `PORT` | Server port (runtime variable, can be overridden) | No | `3000` |
+| `HOSTNAME` | Server hostname (runtime variable, can be overridden) | No | `0.0.0.0` |
+
+**Important Notes:**
+- `PORT` and `HOSTNAME` are **runtime environment variables** - they are read when the container starts, not at build time
+- You can override these values when running the container (e.g., `-e PORT=8080`)
+- If you change `PORT`, make sure to update the Docker port mapping accordingly (e.g., `-p 8080:8080`)
+- This works with pre-built images (like those used in TrueNAS) - you can set `PORT` via environment variables in the container runtime
 
 ### Getting Your Headscale API Token
 
@@ -160,7 +174,8 @@ docker-compose up -d
 ### Container won't start
 - Check logs: `docker logs headscale-dashboard`
 - Verify `HEADSCALE_API_URL` is correct and accessible
-- Ensure port 3000 is not already in use
+- Ensure the port (default 3000) is not already in use
+- If you set a custom `PORT`, verify the port mapping matches (e.g., if `PORT=8080`, use `-p 8080:8080`)
 
 ### Can't connect to Headscale API
 - Verify `HEADSCALE_API_URL` is correct

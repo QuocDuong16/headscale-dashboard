@@ -9,6 +9,9 @@ services:
     environment:
       - HEADSCALE_API_URL=${HEADSCALE_API_URL:-https://your-headscale-server.com}
       - NODE_ENV=production
+      # Optional: Override default port (default is 3000)
+      # If you set PORT, make sure to update the port mapping above
+      # - PORT=8080
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
