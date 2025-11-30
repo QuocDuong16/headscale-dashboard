@@ -110,8 +110,6 @@ docker-compose up -d
 
 4. Click **Save** and wait for deployment
 
-For detailed TrueNAS deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
-
 ## Usage
 
 1. **Access the Dashboard**: Open `http://your-server-ip:3000` in your browser
