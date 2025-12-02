@@ -77,6 +77,8 @@
       "databaseConnectivity": "Database Connectivity",
       "machinesOnline": "Machines Online",
       "routesEnabled": "Routes Enabled",
+      "pendingRegistrationsAlert": "You have {count} pending registration{plural}",
+      "viewPendingRegistrations": "View Pending Registrations",
       "gettingStarted": "Getting Started",
       "gettingStartedDesc": "Quick guide to using the Headscale Dashboard",
       "overview": "Overview",
@@ -99,9 +101,16 @@
       "title": "Connect a Machine",
       "description": "Follow these steps to connect a machine to your Headscale network",
       "preAuthKeyAlert": "Before connecting a machine, make sure you have generated a pre-auth key from the <preauthKeys>PreAuth Keys page</preauthKeys>.",
+      "normalMethodRecommended": "We recommend using the normal registration method (without --authkey) as it is easier to use and works better when the Headscale server is hosted through a proxy.",
+      "normalMethodDesc": "When you run 'tailscale up --login-server=URL' without --authkey, Headscale will automatically create a temporary preauth key and display a registration link. Simply open that link in your browser to complete registration. The registration link will also appear in <pendingRegistrations>Pending Registrations</pendingRegistrations> on the dashboard.",
+      "registrationLinkInfo": "After running the command, you'll see a registration link. Open that link in your browser to complete registration. You can also view pending registration links in the <pendingRegistrations>Pending Registrations page</pendingRegistrations>.",
+      "authkeyWarning": "Note: Using --authkey may cause issues when the Headscale server is hosted through a proxy. We recommend using the normal method (without --authkey) to avoid these issues.",
+      "registrationLinkTitle": "Registration Links",
+      "registrationLinkDesc": "View and manage pending registration links",
       "needPreAuthKey": "Need a Pre-Auth Key?",
       "needPreAuthKeyDesc": "Generate a pre-authentication key to connect machines without manual approval",
       "goToPreAuthKeys": "Go to PreAuth Keys",
+      "viewPendingRegistrations": "View Pending Registrations",
       "installTailscale": "Install Tailscale",
       "startTailscale": "Start Tailscale",
       "connectToHeadscale": "Connect to Headscale",
@@ -109,19 +118,19 @@
       "linux": {
         "installDesc": "Install Tailscale client on your Linux machine",
         "startDesc": "Start the Tailscale service",
-        "connectDesc": "Connect your machine to Headscale using a pre-auth key",
+        "connectDesc": "Connect your machine to Headscale. After running the command, you'll see a registration link - open that link in your browser to complete registration.",
         "verifyDesc": "Check if your machine is connected"
       },
       "windows": {
         "downloadDesc": "Download the Tailscale client for Windows",
         "installDesc": "Install Tailscale and run it",
-        "connectDesc": "Connect to Headscale using a pre-auth key",
+        "connectDesc": "Connect to Headscale. After running the command, you'll see a registration link - open that link in your browser to complete registration.",
         "verifyDesc": "Check if your machine is connected"
       },
       "macos": {
         "installDesc": "Install Tailscale using Homebrew or download from website",
         "startDesc": "Open Tailscale from Applications",
-        "connectDesc": "Connect to Headscale using a pre-auth key",
+        "connectDesc": "Connect to Headscale. After running the command, you'll see a registration link - open that link in your browser to complete registration.",
         "verifyDesc": "Check if your machine is connected"
       }
     },
@@ -348,7 +357,14 @@
       "ephemeralKeys": "Ephemeral Keys",
       "ephemeralKeysDesc": "Ephemeral keys can only be used once. After a machine connects, the key becomes invalid. Non-ephemeral keys can be reused multiple times.",
       "expiringKeys": "Expiring Keys",
-      "expiringKeysDesc": "You can manually expire a key before its expiration date. This immediately invalidates the key."
+      "expiringKeysDesc": "You can manually expire a key before its expiration date. This immediately invalidates the key.",
+      "pendingRegistrations": "Pending Registrations",
+      "pendingRegistrationsDesc": "These preauth keys are waiting to be used. When a user runs 'tailscale up' without an auth-key, Headscale automatically creates a temporary preauth key that appears here.",
+      "pendingRegistrationsAlert": "You have {count} pending registration{plural}",
+      "viewPendingRegistrations": "View Pending Registrations",
+      "copyUrl": "Copy URL",
+      "copyCommand": "Copy Command",
+      "errorLoadingPending": "Error loading pending registrations: {error}"
     },
     "apiKeys": {
       "title": "API Keys",

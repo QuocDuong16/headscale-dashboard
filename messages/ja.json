@@ -77,6 +77,8 @@
       "databaseConnectivity": "データベース接続",
       "machinesOnline": "オンラインマシン",
       "routesEnabled": "有効なルート",
+      "pendingRegistrationsAlert": "保留中の登録が{count}件あります{plural}",
+      "viewPendingRegistrations": "保留中の登録を表示",
       "gettingStarted": "はじめに",
       "gettingStartedDesc": "Headscaleダッシュボードの使用ガイド",
       "overview": "概要",
@@ -99,9 +101,16 @@
       "title": "マシンを接続",
       "description": "これらの手順に従って、マシンをHeadscaleネットワークに接続します",
       "preAuthKeyAlert": "マシンを接続する前に、<preauthKeys>PreAuthキーページ</preauthKeys>からpre-authキーを生成したことを確認してください。",
+      "normalMethodRecommended": "通常の登録方法（--authkeyなし）の使用を推奨します。これは使いやすく、Headscaleサーバーがプロキシ経由でホストされている場合により適切に動作します。",
+      "normalMethodDesc": "--authkeyなしで'tailscale up --login-server=URL'を実行すると、Headscaleは自動的に一時的な事前認証キーを作成し、登録リンクを表示します。そのリンクをブラウザで開くだけで登録が完了します。登録リンクはダッシュボードの<pendingRegistrations>保留中の登録</pendingRegistrations>にも表示されます。",
+      "registrationLinkInfo": "コマンドを実行すると、登録リンクが表示されます。そのリンクをブラウザで開いて登録を完了してください。保留中の登録リンクは<pendingRegistrations>保留中の登録ページ</pendingRegistrations>でも確認できます。",
+      "authkeyWarning": "注意：--authkeyを使用すると、Headscaleサーバーがプロキシ経由でホストされている場合に問題が発生する可能性があります。これらの問題を回避するために、通常の方法（--authkeyなし）の使用を推奨します。",
+      "registrationLinkTitle": "登録リンク",
+      "registrationLinkDesc": "保留中の登録リンクを表示および管理",
       "needPreAuthKey": "Pre-Authキーが必要ですか？",
       "needPreAuthKeyDesc": "手動承認なしでマシンを接続するための事前認証キーを生成します",
       "goToPreAuthKeys": "PreAuthキーに移動",
+      "viewPendingRegistrations": "保留中の登録を表示",
       "installTailscale": "Tailscaleをインストール",
       "startTailscale": "Tailscaleを開始",
       "connectToHeadscale": "Headscaleに接続",
@@ -109,19 +118,19 @@
       "linux": {
         "installDesc": "LinuxマシンにTailscaleクライアントをインストール",
         "startDesc": "Tailscaleサービスを開始",
-        "connectDesc": "pre-authキーを使用してマシンをHeadscaleに接続",
+        "connectDesc": "マシンをHeadscaleに接続します。コマンドを実行すると、登録リンクが表示されます - そのリンクをブラウザで開いて登録を完了してください。",
         "verifyDesc": "マシンが接続されているか確認"
       },
       "windows": {
         "downloadDesc": "Windows用Tailscaleクライアントをダウンロード",
         "installDesc": "Tailscaleをインストールして実行",
-        "connectDesc": "pre-authキーを使用してHeadscaleに接続",
+        "connectDesc": "Headscaleに接続します。コマンドを実行すると、登録リンクが表示されます - そのリンクをブラウザで開いて登録を完了してください。",
         "verifyDesc": "マシンが接続されているか確認"
       },
       "macos": {
         "installDesc": "Homebrewを使用してTailscaleをインストールするか、Webサイトからダウンロード",
         "startDesc": "アプリケーションからTailscaleを開く",
-        "connectDesc": "pre-authキーを使用してHeadscaleに接続",
+        "connectDesc": "Headscaleに接続します。コマンドを実行すると、登録リンクが表示されます - そのリンクをブラウザで開いて登録を完了してください。",
         "verifyDesc": "マシンが接続されているか確認"
       }
     },
@@ -348,7 +357,14 @@
       "ephemeralKeys": "エフェメラルキー",
       "ephemeralKeysDesc": "エフェメラルキーは一度だけ使用できます。マシンが接続すると、キーは無効になります。非エフェメラルキーは複数回再利用できます。",
       "expiringKeys": "キーの期限切れ",
-      "expiringKeysDesc": "有効期限の前にキーを手動で期限切れにすることができます。これにより、キーはすぐに無効になります。"
+      "expiringKeysDesc": "有効期限の前にキーを手動で期限切れにすることができます。これにより、キーはすぐに無効になります。",
+      "pendingRegistrations": "保留中の登録",
+      "pendingRegistrationsDesc": "これらの事前認証キーは使用待ちです。ユーザーがauth-keyなしで'tailscale up'を実行すると、Headscaleは自動的にここに表示される一時的な事前認証キーを作成します。",
+      "pendingRegistrationsAlert": "保留中の登録が{count}件あります{plural}",
+      "viewPendingRegistrations": "保留中の登録を表示",
+      "copyUrl": "URLをコピー",
+      "copyCommand": "コマンドをコピー",
+      "errorLoadingPending": "保留中の登録の読み込みエラー: {error}"
     },
     "apiKeys": {
       "title": "APIキー",

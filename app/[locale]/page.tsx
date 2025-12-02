@@ -3,15 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
-import { Server, Users, Route, Wifi, WifiOff, Activity, Database, Shield } from "lucide-react";
+import { Server, Users, Route, Wifi, WifiOff, Activity, Database, Shield, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { GuideCard } from "@/components/ui/guide-card";
 import { useMachines } from "@/lib/hooks/use-machines";
 import { useUsers } from "@/lib/hooks/use-users";
 import { useRoutes } from "@/lib/hooks/use-routes";
 import { useHealth } from "@/lib/hooks/use-health";
+import { usePendingRegistrations } from "@/lib/hooks/use-preauth-keys";
 
 export default function Dashboard() {
   const t = useTranslations("pages.dashboard");
@@ -21,6 +23,7 @@ export default function Dashboard() {
   const { data: users, isPending: usersPending } = useUsers();
   const { data: routes, isPending: routesPending } = useRoutes();
   const { data: health, isPending: healthPending } = useHealth();
+  const { data: pendingRegistrations } = usePendingRegistrations();
   
   // Track client-side mount to prevent hydration mismatch
   const [isMounted] = useState(() => typeof window !== "undefined");
@@ -31,6 +34,7 @@ export default function Dashboard() {
   const enabledRoutes = routes?.filter((r) => r.enabled).length || 0;
   const totalRoutes = routes?.length || 0;
   const onlinePercentage = totalMachines > 0 ? (onlineMachines / totalMachines) * 100 : 0;
+  const pendingCount = pendingRegistrations?.length || 0;
 
   const stats = [
     {
@@ -93,6 +97,26 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
+          {pendingCount > 0 && (
+            <Alert variant="default" className="border-yellow-500/50 bg-yellow-500/5">
+              <AlertCircle className="h-4 w-4 text-yellow-500" />
+              <AlertDescription className="flex items-center justify-between">
+                <span>
+                  {t("pendingRegistrationsAlert", { 
+                    count: pendingCount,
+                    plural: pendingCount !== 1 ? "s" : ""
+                  })}
+                </span>
+                <Link
+                  href={`/${locale}/preauth-keys`}
+                  className="text-primary hover:underline font-medium ml-4"
+                >
+                  {t("viewPendingRegistrations")}
+                </Link>
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
               <Card key={stat.name} className="card-hover animate-fade-in">

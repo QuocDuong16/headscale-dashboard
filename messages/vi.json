@@ -77,6 +77,8 @@
       "databaseConnectivity": "Kết nối cơ sở dữ liệu",
       "machinesOnline": "Máy trực tuyến",
       "routesEnabled": "Tuyến đường đã bật",
+      "pendingRegistrationsAlert": "Bạn có {count} đăng ký đang chờ",
+      "viewPendingRegistrations": "Xem đăng ký đang chờ",
       "gettingStarted": "Bắt đầu",
       "gettingStartedDesc": "Hướng dẫn nhanh sử dụng Bảng điều khiển Headscale",
       "overview": "Tổng quan",
@@ -99,9 +101,16 @@
       "title": "Kết nối máy",
       "description": "Làm theo các bước sau để kết nối máy với mạng Headscale của bạn",
       "preAuthKeyAlert": "Trước khi kết nối máy, hãy đảm bảo bạn đã tạo khóa pre-auth từ <preauthKeys>trang Khóa PreAuth</preauthKeys>.",
+      "normalMethodRecommended": "Chúng tôi khuyến khích sử dụng phương thức đăng ký thông thường (không dùng --authkey) vì nó dễ sử dụng hơn và hoạt động tốt hơn khi Headscale server được host qua proxy.",
+      "normalMethodDesc": "Khi bạn chạy lệnh 'tailscale up --login-server=URL' mà không có --authkey, Headscale sẽ tự động tạo một khóa preauth tạm thời và hiển thị một link đăng ký. Bạn chỉ cần mở link đó trong trình duyệt để hoàn tất đăng ký. Link đăng ký cũng sẽ xuất hiện trong <pendingRegistrations>Đăng ký đang chờ</pendingRegistrations> trên dashboard.",
+      "registrationLinkInfo": "Sau khi chạy lệnh, bạn sẽ thấy một link đăng ký. Mở link đó trong trình duyệt để hoàn tất đăng ký. Bạn cũng có thể xem các link đăng ký đang chờ trong <pendingRegistrations>trang Đăng ký đang chờ</pendingRegistrations>.",
+      "authkeyWarning": "Lưu ý: Sử dụng --authkey có thể gặp vấn đề khi Headscale server được host qua proxy. Chúng tôi khuyến khích sử dụng phương thức thông thường (không có --authkey) để tránh các vấn đề này.",
+      "registrationLinkTitle": "Link đăng ký",
+      "registrationLinkDesc": "Xem và quản lý các link đăng ký đang chờ",
       "needPreAuthKey": "Cần khóa Pre-Auth?",
       "needPreAuthKeyDesc": "Tạo khóa xác thực trước để kết nối máy mà không cần phê duyệt thủ công",
       "goToPreAuthKeys": "Đi tới Khóa PreAuth",
+      "viewPendingRegistrations": "Xem đăng ký đang chờ",
       "installTailscale": "Cài đặt Tailscale",
       "startTailscale": "Khởi động Tailscale",
       "connectToHeadscale": "Kết nối với Headscale",
@@ -109,19 +118,19 @@
       "linux": {
         "installDesc": "Cài đặt client Tailscale trên máy Linux của bạn",
         "startDesc": "Khởi động dịch vụ Tailscale",
-        "connectDesc": "Kết nối máy của bạn với Headscale bằng khóa pre-auth",
+        "connectDesc": "Kết nối máy của bạn với Headscale. Sau khi chạy lệnh, bạn sẽ thấy một link đăng ký - mở link đó trong trình duyệt để hoàn tất đăng ký.",
         "verifyDesc": "Kiểm tra xem máy của bạn đã kết nối chưa"
       },
       "windows": {
         "downloadDesc": "Tải xuống client Tailscale cho Windows",
         "installDesc": "Cài đặt và chạy Tailscale",
-        "connectDesc": "Kết nối với Headscale bằng khóa pre-auth",
+        "connectDesc": "Kết nối với Headscale. Sau khi chạy lệnh, bạn sẽ thấy một link đăng ký - mở link đó trong trình duyệt để hoàn tất đăng ký.",
         "verifyDesc": "Kiểm tra xem máy của bạn đã kết nối chưa"
       },
       "macos": {
         "installDesc": "Cài đặt Tailscale bằng Homebrew hoặc tải xuống từ trang web",
         "startDesc": "Mở Tailscale từ Applications",
-        "connectDesc": "Kết nối với Headscale bằng khóa pre-auth",
+        "connectDesc": "Kết nối với Headscale. Sau khi chạy lệnh, bạn sẽ thấy một link đăng ký - mở link đó trong trình duyệt để hoàn tất đăng ký.",
         "verifyDesc": "Kiểm tra xem máy của bạn đã kết nối chưa"
       }
     },
@@ -348,7 +357,14 @@
       "ephemeralKeys": "Khóa tạm thời",
       "ephemeralKeysDesc": "Khóa tạm thời chỉ có thể được sử dụng một lần. Sau khi máy kết nối, khóa trở nên không hợp lệ. Khóa không tạm thời có thể được tái sử dụng nhiều lần.",
       "expiringKeys": "Hết hạn khóa",
-      "expiringKeysDesc": "Bạn có thể thủ công hết hạn khóa trước ngày hết hạn của nó. Điều này ngay lập tức làm mất hiệu lực khóa."
+      "expiringKeysDesc": "Bạn có thể thủ công hết hạn khóa trước ngày hết hạn của nó. Điều này ngay lập tức làm mất hiệu lực khóa.",
+      "pendingRegistrations": "Đăng ký đang chờ",
+      "pendingRegistrationsDesc": "Các khóa preauth này đang chờ được sử dụng. Khi người dùng chạy 'tailscale up' mà không có auth-key, Headscale tự động tạo một khóa preauth tạm thời xuất hiện ở đây.",
+      "pendingRegistrationsAlert": "Bạn có {count} đăng ký đang chờ",
+      "viewPendingRegistrations": "Xem đăng ký đang chờ",
+      "copyUrl": "Sao chép URL",
+      "copyCommand": "Sao chép lệnh",
+      "errorLoadingPending": "Lỗi tải đăng ký đang chờ: {error}"
     },
     "apiKeys": {
       "title": "Khóa API",

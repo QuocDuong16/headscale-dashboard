@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { PreAuthKeyList } from "@/components/preauth-keys/preauth-key-list";
+import { PendingRegistrations } from "@/components/preauth-keys/pending-registrations";
 import { GuideCard } from "@/components/ui/guide-card";
 import { Key } from "lucide-react";
 import Link from "next/link";
@@ -19,6 +20,8 @@ export default function PreAuthKeysPage() {
           {t("description")}
         </p>
       </div>
+
+      <PendingRegistrations />
 
       <GuideCard
         title={t("guideTitle")}

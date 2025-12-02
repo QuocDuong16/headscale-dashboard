@@ -46,12 +46,12 @@ export function SetupGuide() {
   }, []);
 
   // Create rich text note with link - using inline rendering to prevent line breaks
-  const preAuthKeyNote = useMemo(() => {
+  const registrationLinkNote = useMemo(() => {
     return (
       <span className="inline">
-        {t.rich("preAuthKeyAlert", {
-          preauthKeys: (chunks) => (
-            <Link key="preauth" href={`/${locale}/preauth-keys`} className="text-primary hover:underline font-medium whitespace-nowrap">
+        {t.rich("registrationLinkInfo", {
+          pendingRegistrations: (chunks) => (
+            <Link key="pending" href={`/${locale}/preauth-keys`} className="text-primary hover:underline font-medium whitespace-nowrap">
               {chunks}
             </Link>
           )
@@ -90,10 +90,13 @@ export function SetupGuide() {
           title: t("connectToHeadscale"),
           description: t("linux.connectDesc"),
           commands: [
-            "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
-            `sudo tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"} --authkey=YOUR_PREAUTH_KEY`,
+            "# Run this command to connect to Headscale",
+            `sudo tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"}`,
+            "",
+            "# After running the command, you'll see a registration link.",
+            "# Copy and open that link in your browser to complete registration.",
           ],
-          note: preAuthKeyNote,
+          note: registrationLinkNote,
         },
         {
           title: t("verifyConnection"),
@@ -130,10 +133,13 @@ export function SetupGuide() {
           description: t("windows.connectDesc"),
           commands: [
             "# Open PowerShell as Administrator",
-            "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
-            `tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"} --authkey=YOUR_PREAUTH_KEY`,
+            "# Run this command to connect to Headscale",
+            `tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"}`,
+            "",
+            "# After running the command, you'll see a registration link.",
+            "# Copy and open that link in your browser to complete registration.",
           ],
-          note: preAuthKeyNote,
+          note: registrationLinkNote,
         },
         {
           title: t("verifyConnection"),
@@ -172,10 +178,13 @@ export function SetupGuide() {
           description: t("macos.connectDesc"),
           commands: [
             "# Open Terminal",
-            "# Replace YOUR_PREAUTH_KEY with your actual pre-auth key",
-            `sudo tailscale up --login-server=${headscaleServerUrl} --authkey=YOUR_PREAUTH_KEY`,
+            "# Run this command to connect to Headscale",
+            `sudo tailscale up --login-server=${headscaleServerUrl || "YOUR_HEADSCALE_SERVER_URL"}`,
+            "",
+            "# After running the command, you'll see a registration link.",
+            "# Copy and open that link in your browser to complete registration.",
           ],
-          note: preAuthKeyNote,
+          note: registrationLinkNote,
         },
         {
           title: t("verifyConnection"),
@@ -193,13 +202,14 @@ export function SetupGuide() {
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
-          {t.rich("preAuthKeyAlert", {
-            preauthKeys: (chunks) => (
-              <Link key="preauth" href={`/${locale}/preauth-keys`} className="text-primary hover:underline font-medium">
-                {chunks}
-              </Link>
-            )
-          })}
+          {t("normalMethodRecommended")}
+        </AlertDescription>
+      </Alert>
+
+      <Alert variant="default" className="border-yellow-500/50 bg-yellow-500/5">
+        <AlertCircle className="h-4 w-4 text-yellow-500" />
+        <AlertDescription>
+          {t("authkeyWarning")}
         </AlertDescription>
       </Alert>
 
@@ -252,16 +262,19 @@ export function SetupGuide() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Key className="h-5 w-5" />
-            {t("needPreAuthKey")}
+            {t("registrationLinkTitle")}
           </CardTitle>
           <CardDescription>
-            {t("needPreAuthKeyDesc")}
+            {t("registrationLinkDesc")}
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            {t("normalMethodDesc")}
+          </p>
           <Button asChild>
             <Link href={`/${locale}/preauth-keys`}>
-              {t("goToPreAuthKeys")}
+              {t("viewPendingRegistrations")}
               <ExternalLink className="ml-2 h-4 w-4" />
             </Link>
           </Button>

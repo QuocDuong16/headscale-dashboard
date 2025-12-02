@@ -77,6 +77,8 @@
       "databaseConnectivity": "数据库连接",
       "machinesOnline": "在线机器",
       "routesEnabled": "已启用路由",
+      "pendingRegistrationsAlert": "您有{count}个待处理的注册{plural}",
+      "viewPendingRegistrations": "查看待处理的注册",
       "gettingStarted": "入门指南",
       "gettingStartedDesc": "Headscale仪表板使用快速指南",
       "overview": "概述",
@@ -99,9 +101,16 @@
       "title": "连接机器",
       "description": "按照以下步骤将机器连接到您的Headscale网络",
       "preAuthKeyAlert": "在连接机器之前，请确保您已从<preauthKeys>预认证密钥页面</preauthKeys>生成了预认证密钥。",
+      "normalMethodRecommended": "我们建议使用普通注册方法（不使用--authkey），因为它更易于使用，并且在Headscale服务器通过代理托管时效果更好。",
+      "normalMethodDesc": "当您运行'tailscale up --login-server=URL'而不使用--authkey时，Headscale会自动创建一个临时preauth密钥并显示注册链接。只需在浏览器中打开该链接即可完成注册。注册链接也会出现在仪表板的<pendingRegistrations>待处理注册</pendingRegistrations>中。",
+      "registrationLinkInfo": "运行命令后，您将看到一个注册链接。在浏览器中打开该链接以完成注册。您也可以在<pendingRegistrations>待处理注册页面</pendingRegistrations>中查看待处理的注册链接。",
+      "authkeyWarning": "注意：使用--authkey在Headscale服务器通过代理托管时可能会出现问题。我们建议使用普通方法（不使用--authkey）以避免这些问题。",
+      "registrationLinkTitle": "注册链接",
+      "registrationLinkDesc": "查看和管理待处理的注册链接",
       "needPreAuthKey": "需要预认证密钥？",
       "needPreAuthKeyDesc": "生成预认证密钥以在没有手动批准的情况下连接机器",
       "goToPreAuthKeys": "转到预认证密钥",
+      "viewPendingRegistrations": "查看待处理注册",
       "installTailscale": "安装Tailscale",
       "startTailscale": "启动Tailscale",
       "connectToHeadscale": "连接到Headscale",
@@ -109,19 +118,19 @@
       "linux": {
         "installDesc": "在Linux机器上安装Tailscale客户端",
         "startDesc": "启动Tailscale服务",
-        "connectDesc": "使用预认证密钥将机器连接到Headscale",
+        "connectDesc": "将机器连接到Headscale。运行命令后，您将看到一个注册链接 - 在浏览器中打开该链接以完成注册。",
         "verifyDesc": "检查您的机器是否已连接"
       },
       "windows": {
         "downloadDesc": "下载Windows版Tailscale客户端",
         "installDesc": "安装并运行Tailscale",
-        "connectDesc": "使用预认证密钥连接到Headscale",
+        "connectDesc": "连接到Headscale。运行命令后，您将看到一个注册链接 - 在浏览器中打开该链接以完成注册。",
         "verifyDesc": "检查您的机器是否已连接"
       },
       "macos": {
         "installDesc": "使用Homebrew安装Tailscale或从网站下载",
         "startDesc": "从应用程序打开Tailscale",
-        "connectDesc": "使用预认证密钥连接到Headscale",
+        "connectDesc": "连接到Headscale。运行命令后，您将看到一个注册链接 - 在浏览器中打开该链接以完成注册。",
         "verifyDesc": "检查您的机器是否已连接"
       }
     },
@@ -348,7 +357,14 @@
       "ephemeralKeys": "临时密钥",
       "ephemeralKeysDesc": "临时密钥只能使用一次。机器连接后，密钥将失效。非临时密钥可以多次重复使用。",
       "expiringKeys": "使密钥过期",
-      "expiringKeysDesc": "您可以在过期日期之前手动使密钥过期。这会立即使密钥失效。"
+      "expiringKeysDesc": "您可以在过期日期之前手动使密钥过期。这会立即使密钥失效。",
+      "pendingRegistrations": "待处理的注册",
+      "pendingRegistrationsDesc": "这些预认证密钥正在等待使用。当用户在没有auth-key的情况下运行'tailscale up'时，Headscale会自动创建一个临时预认证密钥，显示在这里。",
+      "pendingRegistrationsAlert": "您有{count}个待处理的注册{plural}",
+      "viewPendingRegistrations": "查看待处理的注册",
+      "copyUrl": "复制URL",
+      "copyCommand": "复制命令",
+      "errorLoadingPending": "加载待处理注册时出错: {error}"
     },
     "apiKeys": {
       "title": "API密钥",

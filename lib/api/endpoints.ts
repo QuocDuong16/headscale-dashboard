@@ -223,6 +223,31 @@ export const preAuthKeysApi = {
     return response.data.preAuthKeys || [];
   },
 
+  listAll: async (): Promise<PreAuthKey[]> => {
+    // Get all users, then get all preauth keys for each user
+    const users = await usersApi.list();
+    const allKeys: PreAuthKey[] = [];
+    
+    // Fetch keys for each user in parallel
+    await Promise.all(
+      users.map(async (user) => {
+        try {
+          const response = await apiClient.get<ListPreAuthKeysResponse>(
+            `/preauthkey?user=${user.id}`
+          );
+          if (response.data.preAuthKeys) {
+            allKeys.push(...response.data.preAuthKeys);
+          }
+        } catch (error) {
+          // Silently skip users that fail (e.g., no keys)
+          console.warn(`Failed to fetch keys for user ${user.name}:`, error);
+        }
+      })
+    );
+    
+    return allKeys;
+  },
+
   create: async (data: CreatePreAuthKeyRequest): Promise<PreAuthKey> => {
     // Get user ID from user name
     const user = await usersApi.get(data.user);
